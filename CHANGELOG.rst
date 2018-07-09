@@ -5,6 +5,7 @@ Unreleased
 ==========
 
 * Remove bin directory
+* Remove debian directory
 
 0.10.0 and before
 =================
