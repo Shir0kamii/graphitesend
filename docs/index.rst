@@ -6,6 +6,7 @@ Documentation
 .. toctree::
    :maxdepth: 3
 
+   formatting
    reference
 
 Indices and tables
