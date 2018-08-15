@@ -19,8 +19,6 @@ default_graphite_pickle_port = 2004
 default_graphite_plaintext_port = 2003
 default_graphite_server = 'graphite'
 
-VERSION = "0.10.0"
-
 
 class GraphiteSendException(Exception):
     pass
@@ -76,7 +74,7 @@ class GraphiteClient(object):
 
     """
 
-    def __init__(self, prefix=None, graphite_server=None, graphite_port=2003,
+    def __init__(self, graphite_server=None, graphite_port=2003, prefix=None,
                  timeout_in_seconds=2, debug=False, group=None,
                  system_name=None, suffix=None, lowercase_metric_names=False,
                  connect_on_create=True, fqdn_squash=False,

@@ -12,6 +12,22 @@ Graphitesender is available on pypi:
 
     pip install graphitesender
 
+Usage
+=====
+
+Assuming your hostname is *bob* and your graphite instance is on
+*example.com*:
+
+.. code-block:: python
+
+    from graphite import GraphiteClient
+
+    client = GraphiteClient("example.com")
+    client.send("foo", 42)
+
+This will send the metric *systems.bob.foo* with the value *42* and the
+current timestamp
+
 Graphitesend
 ============
 
