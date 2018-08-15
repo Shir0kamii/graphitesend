@@ -39,7 +39,7 @@ six months after its notice. Most often in the form of a deprecation.
 
 Since the fork, the following changes has been made:
 
-* None that matter yet
+* Rework of the documentation with better usage
 
 Roadmap
 =======
