@@ -41,4 +41,12 @@ Since the fork, the following changes has been made:
 
 * None that matter yet
 
+Roadmap
+=======
+
+* Deprecate then remove the myriad of formatting arguments, replacing it with
+  a better interface
+* Rework module functions, that should be simple proxies
+* Isolate sending implementation to make it interchangeable
+
 .. _graphitesend: https://github.com/daniellawrence/graphitesend
