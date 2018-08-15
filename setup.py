@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name='graphitesender',
-    version='0.10.0',
+    version='0.10.1',
     description='A simple interface for sending metrics to Graphite',
     author='Alexandre Bonnetain',
     author_email='shir0kamii@gmail.com',
