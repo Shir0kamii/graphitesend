@@ -15,8 +15,6 @@ from .formatter import GraphiteStructuredFormatter
 
 _module_instance = None
 
-default_graphite_pickle_port = 2004
-default_graphite_plaintext_port = 2003
 default_graphite_server = 'graphite'
 
 
@@ -33,7 +31,7 @@ class GraphiteClient(object):
     :param graphite_server: hostname or ip address of graphite server
     :type graphite_server: Default: graphite
     :param graphite_port: TCP port we will connect to
-    :type graphite_port: Default: 2003
+    :type graphite_port: Default: The value of default_port
     :param debug: Toggle debug messages
     :type debug: True or False
     :param group: string added to after system_name and before metric name
@@ -74,7 +72,10 @@ class GraphiteClient(object):
 
     """
 
-    def __init__(self, graphite_server=None, graphite_port=2003, prefix=None,
+    #: If graphite_port is not given, this port will be used
+    default_port = 2003
+
+    def __init__(self, graphite_server=None, graphite_port=None, prefix=None,
                  timeout_in_seconds=2, debug=False, group=None,
                  system_name=None, suffix=None, lowercase_metric_names=False,
                  connect_on_create=True, fqdn_squash=False,
@@ -88,6 +89,8 @@ class GraphiteClient(object):
         graphite server.
 
         """
+        if not graphite_port:
+            graphite_port = self.default_port
 
         # If we are not passed a host, then use the graphite server defined
         # in the module.
@@ -439,16 +442,7 @@ class GraphiteClient(object):
 
 
 class GraphitePickleClient(GraphiteClient):
-
-    def __init__(self, *args, **kwargs):
-        # If the user has not given a graphite_port, then use the default pick
-        # port.
-        if 'graphite_port' not in kwargs:
-            kwargs['graphite_port'] = default_graphite_pickle_port
-
-        # TODO: Fix this hack and use super.
-        # self = GraphiteClient(*args, **kwargs)  # noqa
-        super(self.__class__, self).__init__(*args, **kwargs)
+    default_port = 2004
 
     def str2listtuple(self, string_message):
         "Covert a string that is ready to be sent to graphite into a tuple"
