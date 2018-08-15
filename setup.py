@@ -1,15 +1,15 @@
 #!/usr/bin/env python
-from distutils.core import setup
+from setuptools import setup
 
 setup(
-    name='graphitesend',
+    name='graphitesender',
     version='0.10.0',
     description='A simple interface for sending metrics to Graphite',
-    author='Danny Lawrence',
-    author_email='dannyla@linux.com',
-    url='https://github.com/daniellawrence/graphitesend',
-    packages=['graphitesend'],
-    long_description="https://github.com/daniellawrence/graphitesend",
+    author='Alexandre Bonnetain',
+    author_email='shir0kamii@gmail.com',
+    url='https://github.com/shir0kamii/graphitesender',
+    packages=['graphitesender'],
+    long_description="https://github.com/shir0kamii/graphitesender",
     entry_points={
         'console_scripts': [
             'graphitesend = graphitesend.graphitesend:cli',
