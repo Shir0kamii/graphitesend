@@ -616,5 +616,6 @@ def cli():
     graphitesend_instance = init()
     graphitesend_instance.send(metric, value)
 
+
 if __name__ == '__main__':  # pragma: no cover
     cli()
