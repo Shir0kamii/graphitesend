@@ -1,13 +1,13 @@
 Graphitesender API
 ##################
 
-.. automodule:: graphitesender.graphitesender
+.. automodule:: graphitesend.graphitesend
   :members:
   :undoc-members:
   
 Formatter
 =========
 
-.. automodule:: graphitesender.formatter
+.. automodule:: graphitesend.formatter
   :members:
   :undoc-members:
