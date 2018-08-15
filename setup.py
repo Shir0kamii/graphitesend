@@ -17,5 +17,6 @@ setup(
     },
     extras_require={
         'asynchronous': ['gevent>=1.0.0'],
+        'cli': ['argparse'],
     }
 )
