@@ -125,27 +125,6 @@ class GraphiteClient(object):
                                                      lowercase_metric_names=lowercase_metric_names, fqdn_squash=fqdn_squash,
                                                      clean_metric_name=clean_metric_name)
 
-    @property
-    def prefix(self):
-        '''Backward compat - access to the properties on the default formatter
-        deprecated - use the formatter directly for this type of muckery.
-        '''
-        return self.formatter.prefix
-
-    @property
-    def suffix(self):
-        '''Backward compat - access to properties on the default formatter
-        deprecated - use the formatter directly for this type of muckery.
-        '''
-        return self.formatter.suffix
-
-    @property
-    def lowercase_metric_names(self):
-        '''Backward compat - access to properties on the default formatter
-        deprecated - use the formatter directly for this type of muckery.
-        '''
-        return self.formatter.lowercase_metric_names
-
     def connect(self):
         """
         Make a TCP connection to the graphite server on port self.port
