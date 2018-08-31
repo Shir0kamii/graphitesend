@@ -49,6 +49,7 @@ class GraphiteClient(object):
     :param asynchronous: Send messages asynchronouly via gevent (You have to monkey patch sockets for it to work)
     :param clean_metric_name: Does GraphiteClient needs to clean metric's name
     :type clean_metric_name: True or False
+    :param formatter: Callable that will format metric names
     It will then send any metrics that you give it via
     the .send() or .send_dict().
 
@@ -85,7 +86,7 @@ class GraphiteClient(object):
                  system_name=None, suffix=None, lowercase_metric_names=False,
                  connect_on_create=True, fqdn_squash=False,
                  dryrun=False, asynchronous=False, autoreconnect=False,
-                 clean_metric_name=True):
+                 clean_metric_name=True, formatter=None):
         """
         setup the connection to the graphite server and work out the
         prefix.
@@ -125,10 +126,13 @@ class GraphiteClient(object):
             self.asynchronous = self.enable_asynchronous()
         self._autoreconnect = autoreconnect
 
-        self.formatter = GraphiteStructuredFormatter(prefix=prefix, group=group,
-                                                     system_name=system_name, suffix=suffix,
-                                                     lowercase_metric_names=lowercase_metric_names, fqdn_squash=fqdn_squash,
-                                                     clean_metric_name=clean_metric_name)
+        if formatter is not None:
+            self.formatter = formatter
+        else:
+            self.formatter = GraphiteStructuredFormatter(prefix=prefix, group=group,
+                                                         system_name=system_name, suffix=suffix,
+                                                         lowercase_metric_names=lowercase_metric_names, fqdn_squash=fqdn_squash,
+                                                         clean_metric_name=clean_metric_name)
 
     def connect(self):
         """
