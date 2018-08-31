@@ -8,6 +8,7 @@ Documentation
 
    usage
    formatting
+   migrating-graphitesend
    reference
 
 Indices and tables
