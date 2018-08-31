@@ -6,6 +6,9 @@ Unreleased
 
 * Remove bin directory
 * Remove debian directory
+* Add argparse as optional dependency
+* Define Client's default port as class attribute
+* Remove Client's proxies to formatter attributes
 
 0.10.0 and before
 =================
