@@ -1,6 +1,5 @@
 import logging
 import platform
-import time
 
 log = logging.getLogger("graphitesend")
 
@@ -22,10 +21,8 @@ class GraphiteStructuredFormatter(object):
     :param clean_metric_name: Does GraphiteClient needs to clean metric's name
     :type clean_metric_name: True or False
 
-    Feel free to implement your own formatter as any callable that accepts
-    def __call__(metric_name, metric_value, timestamp)
-
-    and emits text appropriate to send to graphite's text socket.
+    Feel free to implement your own formatter as any callable that accepts a
+    metric name as argument and return a formatted metric name.
     '''
 
     cleaning_replacement_list = [
@@ -77,21 +74,13 @@ class GraphiteStructuredFormatter(object):
             metric_name = metric_name.replace(_from, _to)
         return metric_name
 
-    '''Format a metric, value, and timestamp for use on the carbon text socket.'''
-    def __call__(self, metric_name, metric_value, timestamp=None):
-        if timestamp is None:
-            timestamp = time.time()
-        timestamp = int(timestamp)
-
-        if type(metric_value).__name__ in ['str', 'unicode']:
-            metric_value = float(metric_value)
-
+    def __call__(self, metric_name):
+        '''Format a metric, value, and timestamp for use on the carbon text socket.'''
         log.debug("metric: '%s'" % metric_name)
         metric_name = self.clean_metric_name(metric_name)
         log.debug("metric: '%s'" % metric_name)
 
-        message = "%s%s%s %f %d\n" % (self.prefix, metric_name, self.suffix,
-                                      metric_value, timestamp)
+        message = "{}{}{}".format(self.prefix, metric_name, self.suffix)
 
         # An option to lowercase the entire message
         if self.lowercase_metric_names:

@@ -305,8 +305,14 @@ class GraphiteClient(object):
     def format_message(self, metric, value, timestamp=None, formatter=None):
         if formatter is None:
             formatter = self.formatter
-        message = formatter(metric, value, timestamp)
-        return message
+
+        if timestamp is None:
+            timestamp = time.time()
+        timestamp = int(timestamp)
+
+        metric = formatter(metric)
+
+        return "{} {} {}\n".format(metric, value, timestamp)
 
     def send(self, metric, value, timestamp=None, formatter=None):
         """
