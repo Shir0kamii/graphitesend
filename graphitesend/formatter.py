@@ -4,6 +4,47 @@ import platform
 log = logging.getLogger("graphitesend")
 
 
+class TemplateFormatter:
+    """Formatter based on a template string
+
+    :param template: A template string that will be rendered for each metric
+
+    Additionnal keyword arguments must be callable, they will be called during
+    rendering with the metric name and should return a string.
+
+    The template must use the modern python formatting syntax, but does not
+    support ordered placeholders. The formatting data will consist of the
+    result of the functions given during instanciation, plus special variables:
+
+    * name: The name of the metric
+    * host: The system's node name
+
+    Consider the following example:
+
+    >>> formatter = TemplateFormatter("systems.{host}.worker{worker}.{name}",
+                                      worker=get_worker_id)
+
+    On a machine named *foobar* and assuming a *get_worker_id* function that
+    return an id, the metric "processing_time" would be formatted like
+    "systems.foobar.worker3.processing_time".
+    """
+
+    def __init__(self, template, **kwargs):
+        self.template = template
+        self.context_getters = {
+            "host": lambda _: platform.node(),
+        }
+        self.data.update(kwargs)
+
+    def make_context(self, metric_name):
+        return {key: value(metric_name)
+                for key, value in self.context_getters.items()}
+
+    def __call__(self, name):
+        context = self.make_context()
+        return self.template.format(name=name, **context)
+
+
 class GraphiteStructuredFormatter(object):
     '''Default formatter for GraphiteClient.
 

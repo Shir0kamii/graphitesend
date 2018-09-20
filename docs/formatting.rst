@@ -15,6 +15,9 @@ Custom formatting
 You can customize the formatting by giving a callable to the *formatter*
 argument of the client.
 
+The best way to have a custom output is to pass a :class:`TemplateFormatter
+<graphitesend.formatter.TemplateFormatter>` instance to the client.
+
 If you don't give one, the following arguments of the client will be forwarded
 to the :class:`GraphiteStructuredFormatter
 <graphitesend.formatter.GraphiteStructuredFormatter>` to make a formatter:
