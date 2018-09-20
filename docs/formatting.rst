@@ -3,6 +3,15 @@ Metrics formatting
 
 Metrics are formatted before they are sent to Graphite.
 
+Default formatting
+==================
+
+When you send a metric *foobar* on a machine named *robocop*, the metric will be
+formatted to *systems.robocop.foobar*.
+
+Custom formatting
+=================
+
 You can customize the formatting by giving a callable to the *formatter*
 argument of the client.
 
