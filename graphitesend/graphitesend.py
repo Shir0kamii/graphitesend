@@ -12,6 +12,7 @@ import time
 import random
 
 from .formatter import GraphiteStructuredFormatter
+from .block_metric import BlockMetric
 
 _module_instance = None
 
@@ -418,6 +419,9 @@ class GraphiteClient(object):
             raise Exception("To activate asynchonoucity, please monkey patch"
                             " the socket module with gevent")
         return True
+
+    def block_metric(self, metric_name):
+        return BlockMetric(self, metric_name)
 
 
 class GraphitePickleClient(GraphiteClient):
