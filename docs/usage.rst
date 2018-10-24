@@ -33,4 +33,26 @@ applied):
 The responsability is yours to agregate the metrics, for example with
 carbon-aggregate.
 
+Measuring the execution of a function
+=====================================
 
+You can retrieve the same metrics for a function using the
+:meth:`decorator <graphitesend.graphitesend.GraphiteClient.decorator>` method of
+the client.
+
+.. code-block:: python
+
+    @cient.decorator
+    def foo():
+        pass
+
+The following form, without argument, will use the name of the function as a
+base metric name. In this case, it will be *foo.executions* and so on.
+
+.. code-block:: python
+
+    @client.decorator("bar")
+    def foo():
+        pass
+
+This second sample will send the metrics with the base metric name *bar*.

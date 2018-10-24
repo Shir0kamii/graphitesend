@@ -5,6 +5,7 @@ try:
 except ImportError:
     gevent = False
 
+import functools
 import pickle
 import socket
 import struct
@@ -422,6 +423,18 @@ class GraphiteClient(object):
 
     def block_metric(self, metric_name):
         return BlockMetric(self, metric_name)
+
+    def decorator(self, metric_or_func):
+        def wrapper(func, metric_name):
+            @functools.wraps(func)
+            def wrapped(*args, **kwargs):
+                with self.block_metric(metric_name):
+                    return func(*args, **kwargs)
+            return wrapped
+
+        if not isinstance(metric_or_func, str):
+            return wrapper(metric_or_func, metric_or_func.__name__)
+        return functools.partial(wrapper, metric_name=metric_or_func)
 
 
 class GraphitePickleClient(GraphiteClient):
