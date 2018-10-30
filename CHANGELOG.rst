@@ -4,11 +4,11 @@ Changelog
 Unreleased
 ==========
 
-* Remove bin directory
-* Remove debian directory
-* Add argparse as optional dependency
-* Define Client's default port as class attribute
-* Remove Client's proxies to formatter attributes
+* Add argparse as optional dependency.
+* Define Client's default port as class attribute.
+* Remove Client's proxies to formatter attributes.
+* Reset test architecture with pytest. The tests doesn't cover much for now, but
+  more will be added as the development goes on.
 
 0.10.0 and before
 =================
