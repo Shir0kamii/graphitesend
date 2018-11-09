@@ -50,6 +50,7 @@ class GraphiteClient(object):
     :param clean_metric_name: Does GraphiteClient needs to clean metric's name
     :type clean_metric_name: True or False
     :param formatter: Callable that will format metric names
+
     It will then send any metrics that you give it via
     the .send() or .send_dict().
 
