@@ -4,6 +4,7 @@ from time import time
 
 @contextmanager
 def executions(client, metric):
+    """Track the number of executions"""
     try:
         yield
     finally:
@@ -12,6 +13,7 @@ def executions(client, metric):
 
 @contextmanager
 def errors(client, metric):
+    """Track the number of errors"""
     try:
         yield
     except Exception:
@@ -20,6 +22,7 @@ def errors(client, metric):
 
 @contextmanager
 def processing_time(client, metric):
+    """Track the processing time"""
     start = time()
     try:
         yield
@@ -28,6 +31,9 @@ def processing_time(client, metric):
 
 
 class BlockMetric:
+    """Enable tracking on a block of code"""
+
+    #: Trackers activated during the execution of the block of code
     trackers = [executions, errors, processing_time]
 
     def __init__(self, client, metric):
