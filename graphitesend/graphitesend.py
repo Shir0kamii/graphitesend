@@ -49,6 +49,7 @@ class GraphiteClient(object):
     :param asynchronous: Send messages asynchronouly via gevent (You have to monkey patch sockets for it to work)
     :param clean_metric_name: Does GraphiteClient needs to clean metric's name
     :type clean_metric_name: True or False
+    :param formatter: Callable that will format metric names
     It will then send any metrics that you give it via
     the .send() or .send_dict().
 
@@ -85,7 +86,7 @@ class GraphiteClient(object):
                  system_name=None, suffix=None, lowercase_metric_names=False,
                  connect_on_create=True, fqdn_squash=False,
                  dryrun=False, asynchronous=False, autoreconnect=False,
-                 clean_metric_name=True):
+                 clean_metric_name=True, formatter=None):
         """
         setup the connection to the graphite server and work out the
         prefix.
@@ -125,10 +126,13 @@ class GraphiteClient(object):
             self.asynchronous = self.enable_asynchronous()
         self._autoreconnect = autoreconnect
 
-        self.formatter = GraphiteStructuredFormatter(prefix=prefix, group=group,
-                                                     system_name=system_name, suffix=suffix,
-                                                     lowercase_metric_names=lowercase_metric_names, fqdn_squash=fqdn_squash,
-                                                     clean_metric_name=clean_metric_name)
+        if formatter is not None:
+            self.formatter = formatter
+        else:
+            self.formatter = GraphiteStructuredFormatter(prefix=prefix, group=group,
+                                                         system_name=system_name, suffix=suffix,
+                                                         lowercase_metric_names=lowercase_metric_names, fqdn_squash=fqdn_squash,
+                                                         clean_metric_name=clean_metric_name)
 
     def connect(self):
         """
@@ -298,6 +302,18 @@ class GraphiteClient(object):
         """
         return message
 
+    def format_message(self, metric, value, timestamp=None, formatter=None):
+        if formatter is None:
+            formatter = self.formatter
+
+        if timestamp is None:
+            timestamp = time.time()
+        timestamp = int(timestamp)
+
+        metric = formatter(metric)
+
+        return "{} {} {}\n".format(metric, value, timestamp)
+
     def send(self, metric, value, timestamp=None, formatter=None):
         """
         Format a single metric/value pair, and send it to the graphite
@@ -323,9 +339,7 @@ class GraphiteClient(object):
           >>> g.send(metric="metricname", value=73)
 
         """
-        if formatter is None:
-            formatter = self.formatter
-        message = formatter(metric, value, timestamp)
+        message = self.format_message(metric, value, timestamp, formatter)
         message = self. _presend(message)
         return self._dispatch_send(message)
 
@@ -347,13 +361,11 @@ class GraphiteClient(object):
           >>> g.send_dict({'metric1': 54, 'metric2': 43, 'metricN': 999})
 
         """
-        if formatter is None:
-            formatter = self.formatter
-
         metric_list = []
 
         for metric, value in data.items():
-            tmp_message = formatter(metric, value, timestamp)
+            tmp_message = self.format_message(metric, value, timestamp,
+                                              formatter)
             metric_list.append(tmp_message)
 
         message = "".join(metric_list)
@@ -378,9 +390,6 @@ class GraphiteClient(object):
           >>> g.send_list([('metric1', 54),('metric2', 43, 1384418995)])
 
         """
-        if formatter is None:
-            formatter = self.formatter
-
         if timestamp is None:
             timestamp = int(time.time())
         else:
@@ -401,7 +410,8 @@ class GraphiteClient(object):
                 (metric, value) = metric_info
                 metric_timestamp = timestamp
 
-            tmp_message = formatter(metric, value, metric_timestamp)
+            tmp_message = self.format_message(metric, value, metric_timestamp,
+                                              formatter)
             metric_list.append(tmp_message)
 
         message = "".join(metric_list)
