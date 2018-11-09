@@ -5,6 +5,7 @@ try:
 except ImportError:
     gevent = False
 
+import functools
 import pickle
 import socket
 import struct
@@ -12,6 +13,7 @@ import time
 import random
 
 from .formatter import GraphiteStructuredFormatter
+from .block_metric import BlockMetric
 
 _module_instance = None
 
@@ -74,6 +76,9 @@ class GraphiteClient(object):
 
     #: If graphite_port is not given, this port will be used
     default_port = 2003
+
+    #: Default block metric class
+    block_metric_cls = BlockMetric
 
     def __init__(self, graphite_server=None, graphite_port=None, prefix=None,
                  timeout_in_seconds=2, debug=False, group=None,
@@ -418,6 +423,21 @@ class GraphiteClient(object):
             raise Exception("To activate asynchonoucity, please monkey patch"
                             " the socket module with gevent")
         return True
+
+    def block_metric(self, metric_name):
+        return self.block_metric_cls(self, metric_name)
+
+    def decorator(self, metric_or_func):
+        def wrapper(func, metric_name):
+            @functools.wraps(func)
+            def wrapped(*args, **kwargs):
+                with self.block_metric(metric_name):
+                    return func(*args, **kwargs)
+            return wrapped
+
+        if not isinstance(metric_or_func, str):
+            return wrapper(metric_or_func, metric_or_func.__name__)
+        return functools.partial(wrapper, metric_name=metric_or_func)
 
 
 class GraphitePickleClient(GraphiteClient):
