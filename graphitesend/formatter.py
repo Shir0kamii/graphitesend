@@ -34,14 +34,14 @@ class TemplateFormatter:
         self.context_getters = {
             "host": lambda _: platform.node(),
         }
-        self.data.update(kwargs)
+        self.context_getters.update(kwargs)
 
     def make_context(self, metric_name):
         return {key: value(metric_name)
                 for key, value in self.context_getters.items()}
 
     def __call__(self, name):
-        context = self.make_context()
+        context = self.make_context(name)
         return self.template.format(name=name, **context)
 
 

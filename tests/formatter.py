@@ -1,4 +1,16 @@
-from graphitesend import GraphiteStructuredFormatter
+import pytest
+
+from graphitesend import TemplateFormatter, GraphiteStructuredFormatter
+
+
+def test_template_name(metric_name):
+    name_formatter = TemplateFormatter("{name}")
+    assert metric_name == name_formatter(metric_name)
+
+
+def test_template_group(metric_name):
+    name_formatter = TemplateFormatter("{group}.{name}", group=lambda _: "boo")
+    assert "boo." + metric_name == name_formatter(metric_name)
 
 
 def test_default_prefix(default_formatter, system_name):

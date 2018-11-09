@@ -5,6 +5,11 @@ from graphitesend import GraphiteClient, GraphiteStructuredFormatter
 from graphitesend.block_metric import BlockMetric
 
 
+@pytest.fixture(params=["foo", "bar", "baz"])
+def metric_name(request):
+    return request.param
+
+
 @pytest.fixture
 def system_name():
     return platform.uname()[1]
