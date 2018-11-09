@@ -8,7 +8,7 @@ setup(
     author='Alexandre Bonnetain',
     author_email='shir0kamii@gmail.com',
     url='https://github.com/shir0kamii/graphitesender',
-    packages=['graphitesender'],
+    packages=['graphitesend'],
     long_description="https://github.com/shir0kamii/graphitesender",
     entry_points={
         'console_scripts': [
