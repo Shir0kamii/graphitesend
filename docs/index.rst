@@ -10,6 +10,7 @@ Documentation
    formatting
    migrating-graphitesend
    reference
+   changelog
 
 Indices and tables
 ==================
