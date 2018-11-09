@@ -77,6 +77,9 @@ class GraphiteClient(object):
     #: If graphite_port is not given, this port will be used
     default_port = 2003
 
+    #: Default block metric class
+    block_metric_cls = BlockMetric
+
     def __init__(self, graphite_server=None, graphite_port=None, prefix=None,
                  timeout_in_seconds=2, debug=False, group=None,
                  system_name=None, suffix=None, lowercase_metric_names=False,
@@ -422,7 +425,7 @@ class GraphiteClient(object):
         return True
 
     def block_metric(self, metric_name):
-        return BlockMetric(self, metric_name)
+        return self.block_metric_cls(self, metric_name)
 
     def decorator(self, metric_or_func):
         def wrapper(func, metric_name):
