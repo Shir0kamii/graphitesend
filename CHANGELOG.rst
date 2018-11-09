@@ -4,6 +4,7 @@ Changelog
 Unreleased
 ==========
 
+* Implement block metrics
 * Add argparse as optional dependency.
 * Define Client's default port as class attribute.
 * Remove Client's proxies to formatter attributes.
