@@ -28,7 +28,7 @@ copyright = u'2013, Daniel Lawrence <dannyla@linux.com>'
 #
 # The short X.Y version.
 
-release = version = '0.10.1'
+release = version = '0.11.0'
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.

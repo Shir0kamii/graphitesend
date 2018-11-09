@@ -1,8 +1,8 @@
 Changelog
 #########
 
-Unreleased
-==========
+0.11.0
+======
 
 * Allow to pass formatter to the client, and deprecate all arguments forwarded
   to the formatter
