@@ -4,6 +4,8 @@ Changelog
 Unreleased
 ==========
 
+* Allow to pass formatter to the client, and deprecate all arguments forwarded
+  to the formatter
 * Implement block metrics
 * Add argparse as optional dependency.
 * Define Client's default port as class attribute.
