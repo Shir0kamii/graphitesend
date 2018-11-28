@@ -70,7 +70,6 @@ class GraphiteStructuredFormatter(object):
         ('(', '_'),
         (')', ''),
         (' ', '_'),
-        ('-', '_'),
         ('/', '_'),
         ('\\', '_')
     ]
