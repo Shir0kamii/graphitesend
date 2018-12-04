@@ -1,6 +1,11 @@
 Changelog
 #########
 
+0.11.1
+======
+
+* Stop replacing '-' with '_'
+
 0.11.0
 ======
 
