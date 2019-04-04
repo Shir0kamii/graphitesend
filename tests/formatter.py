@@ -1,5 +1,3 @@
-import pytest
-
 from graphitesend import TemplateFormatter, GraphiteStructuredFormatter
 
 

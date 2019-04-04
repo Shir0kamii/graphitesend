@@ -7,13 +7,12 @@ python:
  
 # command to install dependencies
 install:
-  - "pip install -r requirements-test.txt"
-  - "pip install gevent==1.1.0"
+  - "pip install -I -r requirements.txt"
 
 # command to run tests
 script: 
-  - "flake8 --exclude=.tox,.virtualenv --ignore=E501"
-  - "nosetests --with-coverage --cover-package=graphitesend"
+  - flake8
+  - pytest
   
 after_success:
   coveralls
