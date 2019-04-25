@@ -1,6 +1,12 @@
 Changelog
 #########
 
+0.11.2
+======
+
+* Drop Python 2.6 support
+* Fix Python 2.7 compatibility
+
 0.11.1
 ======
 

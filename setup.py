@@ -9,7 +9,7 @@ if sys.version_info.major == 2:
 
 setup(
     name='graphitesender',
-    version='0.11.1',
+    version='0.11.2',
     description='A simple interface for sending metrics to Graphite',
     author='Alexandre Bonnetain',
     author_email='shir0kamii@gmail.com',
