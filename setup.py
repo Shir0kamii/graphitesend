@@ -1,5 +1,11 @@
 #!/usr/bin/env python
+
+import sys
 from setuptools import setup
+
+install_requires = []
+if sys.version_info.major == 2:
+    install_requires.append('contextlib2')
 
 setup(
     name='graphitesender',
@@ -15,6 +21,7 @@ setup(
             'graphitesend = graphitesend.graphitesend:cli',
         ],
     },
+    install_requires=install_requires,
     extras_require={
         'asynchronous': ['gevent>=1.0.0'],
         'cli': ['argparse'],

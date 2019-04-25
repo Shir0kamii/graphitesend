@@ -1,5 +1,10 @@
-from contextlib import contextmanager, ExitStack
+import sys
 from time import time
+
+if sys.version_info.major == 2:
+    from contextlib2 import contextmanager, ExitStack
+else:
+    from contextlib import contextmanager, ExitStack
 
 
 @contextmanager
