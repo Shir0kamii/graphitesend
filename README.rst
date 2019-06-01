@@ -20,7 +20,7 @@ Assuming your hostname is *bob* and your graphite instance is on
 
 .. code-block:: python
 
-    from graphite import GraphiteClient
+    from graphitesend import GraphiteClient
 
     client = GraphiteClient("example.com")
     client.send("foo", 42)
